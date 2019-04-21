@@ -1,9 +1,11 @@
 package ru.art.mygallery.view;
 
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,45 +13,73 @@ import androidx.recyclerview.widget.RecyclerView;
 import ru.art.mygallery.R;
 import ru.art.mygallery.presenter.IRecyclerThreePresenter;
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private IRecyclerThreePresenter iRecyclerMainPresenter;
+import static ru.art.mygallery.AppConstants.MY_COUNTER;
 
-    MyAdapter(IRecyclerThreePresenter iRecyclerMainPresenter) {
-        this.iRecyclerMainPresenter = iRecyclerMainPresenter;
+class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    private IRecyclerThreePresenter presenter;
+    private int counter;
+
+    private SharedPreferences preferences;
+
+    MyAdapter(IRecyclerThreePresenter presenter, SharedPreferences preferences) {
+        this.presenter = presenter;
+        this.preferences = preferences;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_three, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.position = position;
-        iRecyclerMainPresenter.bindView(holder);
+        presenter.bindView(holder);
+        holder.cardImage.setOnClickListener(this::showCouner);
+    }
+
+    private void showCouner(View view) {
+        loadCounter();
+        Toast.makeText(view.getContext(), "Счетчик = " + counter, Toast.LENGTH_SHORT).show();
+        saveCounter();
+    }
+
+    private void saveCounter() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(MY_COUNTER, counter);
+        editor.apply();
+    }
+
+    private void loadCounter() {
+        counter = preferences.getInt(MY_COUNTER, 0);
+        counter++;
     }
 
     @Override
     public int getItemCount() {
-        return iRecyclerMainPresenter.getItemCount();
+        return presenter.getItemCount();
     }
 
 
     class MyViewHolder extends RecyclerView.ViewHolder implements IViewHolder {
 
-        private TextView textView;
+        private ImageView cardImage;
         private int position = 0;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.text_view);
+            cardImage = itemView.findViewById(R.id.card_image);
         }
 
         @Override
         public void setText(String text) {
-            textView.setText(text);
+        }
+
+        @Override
+        public void setImage(int image) {
+            cardImage.setImageResource(image);
         }
 
         @Override

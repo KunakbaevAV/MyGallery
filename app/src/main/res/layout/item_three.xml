@@ -9,4 +9,10 @@
         android:layout_height="wrap_content"
         android:textSize="24sp" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description"
+        android:src="@drawable/car01" />
+
 </FrameLayout>
