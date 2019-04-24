@@ -16,7 +16,7 @@ import ru.art.mygallery.presenter.ThreePresenter;
 import static ru.art.mygallery.AppConstants.MY_COUNTER;
 import static ru.art.mygallery.AppConstants.MY_PREFERENCES;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IViewDetails {
 
 
     private ThreePresenter presenter;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.my_recycler);
         GridLayoutManager layoutManager1 = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager1);
-        MyAdapter myAdapter = new MyAdapter(presenter.getRecyclerMainPresenter(), preferences);
+        MyAdapter myAdapter = new MyAdapter(presenter.getRecyclerMainPresenter(), preferences, this);
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -53,5 +53,13 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showDetails(int imageID) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new FragmentDetails(imageID), "Details")
+                .addToBackStack("BackStack")
+                .commit();
     }
 }

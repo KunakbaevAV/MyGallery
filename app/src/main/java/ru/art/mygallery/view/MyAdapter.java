@@ -17,13 +17,15 @@ import static ru.art.mygallery.AppConstants.MY_COUNTER;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private IRecyclerThreePresenter presenter;
+    private IViewDetails fragmentDetails;
     private int counter;
 
     private SharedPreferences preferences;
 
-    MyAdapter(IRecyclerThreePresenter presenter, SharedPreferences preferences) {
+    MyAdapter(IRecyclerThreePresenter presenter, SharedPreferences preferences, IViewDetails fragmentDetails) {
         this.presenter = presenter;
         this.preferences = preferences;
+        this.fragmentDetails = fragmentDetails;
     }
 
     @NonNull
@@ -37,7 +39,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.position = position;
         presenter.bindView(holder);
-        holder.cardImage.setOnClickListener(this::showCouner);
+        int image = holder.getImageRes();
+        holder.cardImage.setOnClickListener(view -> fragmentDetails.showDetails(image));
     }
 
     private void showCouner(View view) {
@@ -67,6 +70,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         private ImageView cardImage;
         private int position = 0;
+        private int imageRes;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,11 +84,16 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         @Override
         public void setImage(int image) {
             cardImage.setImageResource(image);
+            imageRes = image;
         }
 
         @Override
         public int getPos() {
             return position;
+        }
+
+        int getImageRes() {
+            return imageRes;
         }
     }
 }
