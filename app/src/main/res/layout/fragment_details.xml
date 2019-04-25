@@ -8,14 +8,14 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp">
+        android:layout_margin="2dp">
 
         <ImageView
             android:id="@+id/image_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/description"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             tools:src="@drawable/car01" />
 
     </com.google.android.material.card.MaterialCardView>

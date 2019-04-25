@@ -1,31 +1,27 @@
 package ru.art.mygallery.view;
 
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.art.mygallery.R;
+import ru.art.mygallery.presenter.IRecyclerDetails;
 import ru.art.mygallery.presenter.IRecyclerThreePresenter;
-
-import static ru.art.mygallery.AppConstants.MY_COUNTER;
+import ru.art.mygallery.presenter.ThreePresenter;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private IRecyclerThreePresenter presenter;
-    private IViewDetails fragmentDetails;
-    private int counter;
+    private IRecyclerThreePresenter presenterThree;
+    private IRecyclerDetails presenterDetails;
+    private IViewDetails viewDetails;
 
-    private SharedPreferences preferences;
-
-    MyAdapter(IRecyclerThreePresenter presenter, SharedPreferences preferences, IViewDetails fragmentDetails) {
-        this.presenter = presenter;
-        this.preferences = preferences;
-        this.fragmentDetails = fragmentDetails;
+    MyAdapter(ThreePresenter threePresenter, IViewDetails viewDetails) {
+        this.presenterThree = threePresenter.getRecyclerMainPresenter();
+        this.presenterDetails = threePresenter.getDetailPresenter();
+        this.viewDetails = viewDetails;
     }
 
     @NonNull
@@ -38,33 +34,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.position = position;
-        presenter.bindView(holder);
-        int image = holder.getImageRes();
-        holder.cardImage.setOnClickListener(view -> fragmentDetails.showDetails(image));
-    }
-
-    private void showCouner(View view) {
-        loadCounter();
-        Toast.makeText(view.getContext(), "Счетчик = " + counter, Toast.LENGTH_SHORT).show();
-        saveCounter();
-    }
-
-    private void saveCounter() {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(MY_COUNTER, counter);
-        editor.apply();
-    }
-
-    private void loadCounter() {
-        counter = preferences.getInt(MY_COUNTER, 0);
-        counter++;
+        presenterThree.bindView(holder);
+        holder.cardImage.setOnClickListener(view -> presenterDetails.showDetails(viewDetails, holder));
     }
 
     @Override
     public int getItemCount() {
-        return presenter.getItemCount();
+        return presenterThree.getItemCount();
     }
-
 
     class MyViewHolder extends RecyclerView.ViewHolder implements IViewHolder {
 
@@ -88,12 +65,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
         @Override
+        public int getImageID() {
+            return imageRes;
+        }
+
+        @Override
         public int getPos() {
             return position;
         }
 
-        int getImageRes() {
-            return imageRes;
-        }
     }
 }

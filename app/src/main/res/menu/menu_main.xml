@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.materialdesign.MainActivity">
     <item
-        android:id="@+id/settings"
+        android:id="@+id/logs"
         android:orderInCategory="100"
-        android:title="@string/defaut"
+        android:title="@string/description"
         app:showAsAction="never" />
 </menu>

@@ -13,23 +13,21 @@ import androidx.fragment.app.Fragment;
 import ru.art.mygallery.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Реализация детального изображения
  */
 public class FragmentDetails extends Fragment {
 
-    private ImageView image;
     private int imageRes;
 
     FragmentDetails(int imageRes) {
         this.imageRes = imageRes;
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fragment_details, container, false);
-        image = view.findViewById(R.id.image_details);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        ImageView image = view.findViewById(R.id.image_details);
         image.setImageResource(imageRes);
         return view;
     }
