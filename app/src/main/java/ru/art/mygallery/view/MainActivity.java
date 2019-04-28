@@ -5,21 +5,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.art.mygallery.R;
 import ru.art.mygallery.presenter.MainPresenter;
+import ru.art.mygallery.x_moxy.MvpKtxActivity;
 
-public class MainActivity extends AppCompatActivity implements IActivityUpdater {
+public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
 
     MyAdapter myAdapter;
     @BindView(R.id.my_recycler)
     RecyclerView recyclerView;
-    private MainPresenter presenter;
+
+    @InjectPresenter
+    MainPresenter presenter;
+
+    @ProvidePresenter
+    public MainPresenter providePresenter() {
+        return new MainPresenter();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements IActivityUpdater 
     }
 
     private void initRecyclerView() {
-        presenter = new MainPresenter(this);
-        presenter.getAllPhotos();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         myAdapter = new MyAdapter(presenter, this);
         recyclerView.setLayoutManager(layoutManager);
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements IActivityUpdater 
 
     @Override
     public void showDetails(String imageUrl) {
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, new FragmentDetails(imageUrl))
