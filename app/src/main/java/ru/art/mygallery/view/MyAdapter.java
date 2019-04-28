@@ -1,5 +1,6 @@
 package ru.art.mygallery.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,20 +9,24 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.art.mygallery.R;
-import ru.art.mygallery.presenter.IRecyclerDetails;
-import ru.art.mygallery.presenter.IRecyclerThreePresenter;
-import ru.art.mygallery.presenter.ThreePresenter;
+import ru.art.mygallery.model.GlideLoader;
+import ru.art.mygallery.model.entity.Hit;
+import ru.art.mygallery.presenter.IRecyclerAdapter;
+import ru.art.mygallery.presenter.MainPresenter;
+
+import static androidx.recyclerview.widget.RecyclerView.OnClickListener;
+import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    private IRecyclerThreePresenter presenterThree;
-    private IRecyclerDetails presenterDetails;
-    private IViewDetails viewDetails;
+    private IRecyclerAdapter iRecyclerAdapter;
+    private GlideLoader glideLoader;
 
-    MyAdapter(ThreePresenter threePresenter, IViewDetails viewDetails) {
-        this.presenterThree = threePresenter.getRecyclerMainPresenter();
-        this.presenterDetails = threePresenter.getDetailPresenter();
-        this.viewDetails = viewDetails;
+    MyAdapter(MainPresenter presenter, Context context) {
+        this.iRecyclerAdapter = presenter.getRecyclerAdapter();
+        glideLoader = new GlideLoader(context);
     }
 
     @NonNull
@@ -34,44 +39,47 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.position = position;
-        presenterThree.bindView(holder);
-        holder.cardImage.setOnClickListener(view -> presenterDetails.showDetails(viewDetails, holder));
+        iRecyclerAdapter.bindView(holder);
     }
 
     @Override
     public int getItemCount() {
-        return presenterThree.getItemCount();
+        return iRecyclerAdapter.getItemCount();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements IViewHolder {
+    class MyViewHolder extends ViewHolder implements IViewHolder {
 
-        private ImageView cardImage;
+        @BindView(R.id.card_image)
+        ImageView imageView;
+
+        private Hit hit;
+
         private int position = 0;
-        private int imageRes;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardImage = itemView.findViewById(R.id.card_image);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override
-        public void setText(String text) {
+        public Hit getHit() {
+            return hit;
         }
 
         @Override
-        public void setImage(int image) {
-            cardImage.setImageResource(image);
-            imageRes = image;
-        }
-
-        @Override
-        public int getImageID() {
-            return imageRes;
+        public void setHit(Hit hit) {
+            this.hit = hit;
+            glideLoader.loadImage(hit.webformatURL, imageView);
         }
 
         @Override
         public int getPos() {
             return position;
+        }
+
+        @Override
+        public void setOnClickListener(OnClickListener listener) {
+            imageView.setOnClickListener(listener);
         }
 
     }

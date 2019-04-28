@@ -9,26 +9,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.art.mygallery.R;
-import ru.art.mygallery.presenter.ThreePresenter;
+import ru.art.mygallery.presenter.MainPresenter;
 
-public class MainActivity extends AppCompatActivity implements IViewDetails {
+public class MainActivity extends AppCompatActivity implements IActivityUpdater {
 
-    private ThreePresenter presenter;
+    MyAdapter myAdapter;
+    @BindView(R.id.my_recycler)
+    RecyclerView recyclerView;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter = new ThreePresenter();
+        ButterKnife.bind(this);
         initRecyclerView();
     }
 
     private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.my_recycler);
+        presenter = new MainPresenter(this);
+        presenter.getAllPhotos();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        myAdapter = new MyAdapter(presenter, this);
         recyclerView.setLayoutManager(layoutManager);
-        MyAdapter myAdapter = new MyAdapter(presenter, this);
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -40,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements IViewDetails {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.logs) {
-            showMessage(presenter.showLogs().toString());
+        if (item.getItemId() == R.id.description) {
+            showMessage("Первое приложение с использованием популярных библиотек");
+        } else if (item.getItemId() == R.id.action) {
+            showMessage("Пока ничего не меняется");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -51,10 +59,16 @@ public class MainActivity extends AppCompatActivity implements IViewDetails {
     }
 
     @Override
-    public void showDetails(int imageID) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new FragmentDetails(imageID), "Details")
-                .addToBackStack("BackStack")
+    public void updateRecyclerView() {
+        myAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showDetails(String imageUrl) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, new FragmentDetails(imageUrl))
+                .addToBackStack("backStack")
                 .commit();
     }
 }

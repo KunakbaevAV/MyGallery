@@ -2,11 +2,10 @@ package ru.art.mygallery.presenter;
 
 import ru.art.mygallery.view.IViewHolder;
 
-
 /**
  * Связывает адаптер списка с презентером списка
  */
-public interface IRecyclerThreePresenter {
+public interface IRecyclerAdapter {
     void bindView(IViewHolder iViewHolder);
 
     int getItemCount();

@@ -11,25 +11,31 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import ru.art.mygallery.R;
+import ru.art.mygallery.model.GlideLoader;
 
 /**
- * Реализация детального изображения
+ * Реализация изображения на весь экран
  */
 public class FragmentDetails extends Fragment {
 
-    private int imageRes;
+    private String imageUrl;
 
-    FragmentDetails(int imageRes) {
-        this.imageRes = imageRes;
+    FragmentDetails(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
-        ImageView image = view.findViewById(R.id.image_details);
-        image.setImageResource(imageRes);
+        loadImage(view);
         return view;
+    }
+
+    private void loadImage(View view) {
+        GlideLoader glideLoader = new GlideLoader(this.getContext());
+        ImageView image = view.findViewById(R.id.image_details);
+        glideLoader.loadImage(imageUrl, image);
     }
 
 }

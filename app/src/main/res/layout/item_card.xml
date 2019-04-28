@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="4dp">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:contentDescription="@string/description"
         android:nestedScrollingEnabled="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/car01" />
+        android:backgroundTint="@color/colorPrimaryDark"
+        tools:src="@drawable/car01" />
 
 </com.google.android.material.card.MaterialCardView>

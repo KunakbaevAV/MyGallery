@@ -2,4 +2,6 @@
     <string name="app_name">MyGallery</string>
     <string name="description">Описание</string>
     <string name="defaut">Сбросить счетчик</string>
+    <string name="press">Нажми</string>
+    <string name="action">Действие</string>
 </resources>
