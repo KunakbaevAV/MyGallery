@@ -7,5 +7,5 @@ import ru.art.mygallery.model.entity.Photos;
 
 public interface IApiService {
     @GET("api")
-    Observable<Photos> getPhoto(@Query("key") String key);
+    Observable<Photos> getPhoto(@Query("key") String key, @Query("per_page") int page);
 }

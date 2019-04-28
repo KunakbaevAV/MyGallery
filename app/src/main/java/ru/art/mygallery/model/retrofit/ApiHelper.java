@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.art.mygallery.model.entity.Photos;
 
 import static ru.art.mygallery.AppConstants.APY_KEY;
+import static ru.art.mygallery.AppConstants.COUNT_PHOTO;
 
 public class ApiHelper {
     public Observable<Photos> requestServer() {
@@ -21,7 +22,7 @@ public class ApiHelper {
                 .addConverterFactory(getGsonConverterFactory())
                 .build()
                 .create(IApiService.class);
-        return api.getPhoto(APY_KEY).subscribeOn(Schedulers.io());
+        return api.getPhoto(APY_KEY, COUNT_PHOTO).subscribeOn(Schedulers.io());
     }
 
     private GsonConverterFactory getGsonConverterFactory() {
