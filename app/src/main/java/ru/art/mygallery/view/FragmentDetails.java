@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import ru.art.mygallery.R;
 import ru.art.mygallery.model.GlideLoader;
-import ru.art.mygallery.x_moxy.MvpKtxFragment;
 
 /**
  * Реализация изображения на весь экран
  */
-public class FragmentDetails extends MvpKtxFragment implements IMoxyUpdater {
+public class FragmentDetails extends Fragment {
 
     private String imageUrl;
 
@@ -36,15 +36,16 @@ public class FragmentDetails extends MvpKtxFragment implements IMoxyUpdater {
         ImageView imageDetails = view.findViewById(R.id.image_details);
         GlideLoader glideLoader = new GlideLoader(this.getContext());
         glideLoader.loadImage(this.imageUrl, imageDetails);
+        imageDetails.setOnClickListener(v -> returnActivity());
     }
 
-    @Override
-    public void updateRecyclerView() {
-
+    private void returnActivity() {
+        assert getFragmentManager() != null;
+        getFragmentManager()
+                .beginTransaction()
+                .remove(this)
+                .commit();
     }
 
-    @Override
-    public void showDetails(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+
 }

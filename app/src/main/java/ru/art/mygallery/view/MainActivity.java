@@ -19,7 +19,9 @@ import ru.art.mygallery.x_moxy.MvpKtxActivity;
 
 public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
 
-    MyAdapter myAdapter;
+    private MyAdapter myAdapter;
+    private FragmentDetails fragmentDetails;
+
     @BindView(R.id.my_recycler)
     RecyclerView recyclerView;
 
@@ -74,10 +76,24 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
     @Override
     public void showDetails(String imageUrl) {
 
+        fragmentDetails = new FragmentDetails(imageUrl);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, new FragmentDetails(imageUrl))
-                .addToBackStack("backStack")
+                .add(R.id.container, fragmentDetails)
                 .commit();
+    }
+
+
+    @Override
+    protected void onPause() {
+        //Переопределяю данный метод, чтобы программа не вылетала при повороте экрана во время просмотра
+        //изображения на весь экран.
+        super.onPause();
+        if (fragmentDetails != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragmentDetails)
+                    .commit();
+        }
     }
 }
