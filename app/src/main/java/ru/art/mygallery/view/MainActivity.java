@@ -1,5 +1,6 @@
 package ru.art.mygallery.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,7 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
 
     private void initRecyclerView() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        myAdapter = new MyAdapter(presenter, this);
+        myAdapter = new MyAdapter(presenter.getRecyclerAdapter(), this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(myAdapter);
     }
@@ -59,9 +60,14 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
         if (item.getItemId() == R.id.description) {
             showMessage("Первое приложение с использованием популярных библиотек");
         } else if (item.getItemId() == R.id.action) {
-            showMessage("Пока ничего не меняется");
+            startSaveActivity();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startSaveActivity() {
+        Intent intent = new Intent(this, SaveActivity.class);
+        startActivity(intent);
     }
 
     private void showMessage(String text) {

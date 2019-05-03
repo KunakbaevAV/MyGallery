@@ -18,6 +18,16 @@
             android:scaleType="fitCenter"
             tools:src="@drawable/car01" />
 
+        <Button
+            android:id="@+id/button_save_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end |bottom"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/save"
+            android:textColor="@android:color/white" />
+
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

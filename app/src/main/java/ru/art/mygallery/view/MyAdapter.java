@@ -15,7 +15,6 @@ import ru.art.mygallery.R;
 import ru.art.mygallery.model.GlideLoader;
 import ru.art.mygallery.model.entity.Hit;
 import ru.art.mygallery.presenter.IRecyclerAdapter;
-import ru.art.mygallery.presenter.MainPresenter;
 
 import static androidx.recyclerview.widget.RecyclerView.OnClickListener;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -24,8 +23,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private IRecyclerAdapter iRecyclerAdapter;
     private GlideLoader glideLoader;
 
-    MyAdapter(MainPresenter presenter, Context context) {
-        this.iRecyclerAdapter = presenter.getRecyclerAdapter();
+    MyAdapter(IRecyclerAdapter recyclerAdapter, Context context) {
+        this.iRecyclerAdapter = recyclerAdapter;
         glideLoader = new GlideLoader(context);
     }
 
