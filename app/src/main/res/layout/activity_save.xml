@@ -2,19 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_save"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.SaveActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favourites_recycler"
+        android:id="@+id/recycler_save"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/favourites_button"
+        android:id="@+id/button_save_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -22,7 +23,6 @@
         android:layout_marginBottom="8dp"
         android:text="@string/back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

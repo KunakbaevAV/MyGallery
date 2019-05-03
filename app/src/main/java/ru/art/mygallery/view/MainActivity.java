@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,6 +16,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.art.mygallery.R;
+import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.presenter.MainPresenter;
 import ru.art.mygallery.x_moxy.MvpKtxActivity;
 
@@ -25,6 +27,9 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
 
     @BindView(R.id.my_recycler)
     RecyclerView recyclerView;
+
+    @BindView(R.id.button_show_save)
+    Button buttonShowSave;
 
     @InjectPresenter
     MainPresenter presenter;
@@ -40,6 +45,7 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initRecyclerView();
+        buttonShowSave.setOnClickListener(v -> startSaveActivity());
     }
 
     private void initRecyclerView() {
@@ -70,25 +76,19 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
         startActivity(intent);
     }
 
-    private void showMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void updateRecyclerView() {
         myAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showDetails(String imageUrl) {
-
-        fragmentDetails = new FragmentDetails(imageUrl);
+    public void showDetails(Photo photo) {
+        fragmentDetails = new FragmentDetails(photo);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, fragmentDetails)
+                .add(R.id.container_main, fragmentDetails)
                 .commit();
     }
-
 
     @Override
     protected void onPause() {
@@ -101,5 +101,9 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
                     .remove(fragmentDetails)
                     .commit();
         }
+    }
+
+    private void showMessage(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

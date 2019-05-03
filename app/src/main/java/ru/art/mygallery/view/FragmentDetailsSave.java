@@ -16,22 +16,19 @@ import ru.art.mygallery.model.GlideLoader;
 import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.model.room.RoomPresenter;
 
-/**
- * Реализация изображения на весь экран
- */
-public class FragmentDetails extends Fragment {
+public class FragmentDetailsSave extends Fragment {
 
     private Photo photo;
     private RoomPresenter roomPresenter;
 
-    FragmentDetails(Photo photo) {
+    FragmentDetailsSave(Photo photo) {
         this.photo = photo;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_details_save, container, false);
         initImage(view);
         initButton(view);
         roomPresenter = new RoomPresenter(() -> {
@@ -40,12 +37,13 @@ public class FragmentDetails extends Fragment {
     }
 
     private void initButton(View view) {
-        Button buttonSave = view.findViewById(R.id.button_save_image);
-        buttonSave.setOnClickListener(v -> saveImage());
+        Button buttonSave = view.findViewById(R.id.button_delete_image);
+        buttonSave.setOnClickListener(v -> deleteImage());
     }
 
-    private void saveImage() {
-        roomPresenter.putData(photo);
+    private void deleteImage() {
+        roomPresenter.deleteData(photo);
+        returnActivity();
     }
 
     private void initImage(View view) {

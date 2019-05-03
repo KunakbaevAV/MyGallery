@@ -12,6 +12,8 @@ public class Photo {
 
     public String url;
 
+//    public int positionInRecycler;
+
     public Photo(String url) {
         this.url = url;
     }

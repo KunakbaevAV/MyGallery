@@ -6,4 +6,6 @@
     <string name="action">Действие</string>
     <string name="save">Сохранить</string>
     <string name="back">Назад</string>
+    <string name="choosen">Избранное</string>
+    <string name="delete">Удалить</string>
 </resources>

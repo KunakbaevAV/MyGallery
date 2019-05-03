@@ -31,10 +31,8 @@ public class RoomPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         savedImages -> {
-                            Log.i(TAG, "getData: prevous" + savedImagesList.toString());
                             savedImagesList.clear();
                             savedImagesList.addAll(savedImages);
-                            Log.i(TAG, "getData: after" + savedImagesList.toString());
                             roomUpdate.update();
                         },
                         throwable -> Log.i(TAG, "getData: " + throwable)
@@ -55,7 +53,7 @@ public class RoomPresenter {
     public void deleteData(Photo image) {
         Disposable disposable = deleteImage(image).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        position -> Log.i(TAG, "deleteData: " + position),
+                        position -> getData(), //тут нужно подумать, как обновлять список сохраненных изображений
                         throwable -> Log.i(TAG, "deleteData: " + throwable));
     }
 

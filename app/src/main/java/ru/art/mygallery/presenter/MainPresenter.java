@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import ru.art.mygallery.model.entity.Photos;
 import ru.art.mygallery.model.retrofit.ApiHelper;
+import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.view.IMoxyUpdater;
 import ru.art.mygallery.view.IViewHolder;
 
@@ -53,7 +54,9 @@ public class MainPresenter extends MvpPresenter<IMoxyUpdater> {
         public void bindView(IViewHolder holder) {
             int position = holder.getPos();
             holder.setHit(photos.hits.get(position));
-            holder.setOnClickListener(v -> getViewState().showDetails(holder.getHit().webformatURL));
+            Photo photo = new Photo(photos.hits.get(position).webformatURL);
+//            photo.positionInRecycler = position;
+            holder.setOnClickListener(v -> getViewState().showDetails(photo));
         }
 
         @Override

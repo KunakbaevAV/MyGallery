@@ -5,10 +5,12 @@ import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
+import ru.art.mygallery.model.room.Photo;
+
 public interface IMoxyUpdater extends MvpView {
     @StateStrategyType(value = AddToEndStrategy.class)
     void updateRecyclerView();
 
     @StateStrategyType(value = AddToEndSingleStrategy.class)
-    void showDetails(String imageUrl);
+    void showDetails(Photo photo);
 }

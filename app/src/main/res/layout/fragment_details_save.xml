@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.FragmentDetails">
+    android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -18,15 +18,14 @@
             tools:src="@drawable/car01" />
 
         <Button
-            android:id="@+id/button_save_image"
+            android:id="@+id/button_delete_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end |bottom"
             android:layout_margin="8dp"
             android:backgroundTint="@color/colorAccent"
-            android:text="@string/save"
+            android:text="@string/delete"
             android:textColor="@android:color/white" />
-
     </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

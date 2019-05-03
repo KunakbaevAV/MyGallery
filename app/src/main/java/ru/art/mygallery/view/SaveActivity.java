@@ -8,16 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.art.mygallery.R;
+import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.presenter.SavePresenter;
 
 public class SaveActivity extends AppCompatActivity implements IMoxyUpdater {
 
-    @BindView(R.id.favourites_recycler)
+    @BindView(R.id.recycler_save)
     RecyclerView recyclerView;
 
     SavePresenter presenter;
     private MyAdapter myAdapter;
+    private FragmentDetailsSave fragmentDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,16 @@ public class SaveActivity extends AppCompatActivity implements IMoxyUpdater {
     }
 
     @Override
-    public void showDetails(String imageUrl) {
+    public void showDetails(Photo photo) {
+        FragmentDetailsSave fragment = new FragmentDetailsSave(photo);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_save, fragment)
+                .commit();
+    }
 
+    @OnClick(R.id.button_save_back)
+    public void backToHome() {
+        finish();
     }
 }
