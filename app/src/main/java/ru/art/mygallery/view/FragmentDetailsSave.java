@@ -20,9 +20,13 @@ public class FragmentDetailsSave extends Fragment {
 
     private Photo photo;
     private RoomPresenter roomPresenter;
+    private MyAdapter adapter;
+    private int position;
 
-    FragmentDetailsSave(Photo photo) {
+    FragmentDetailsSave(Photo photo, MyAdapter adapter, int position) {
         this.photo = photo;
+        this.adapter = adapter;
+        this.position = position;
     }
 
     @Override
@@ -31,8 +35,7 @@ public class FragmentDetailsSave extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details_save, container, false);
         initImage(view);
         initButton(view);
-        roomPresenter = new RoomPresenter(() -> {
-        });
+        roomPresenter = new RoomPresenter();
         return view;
     }
 
@@ -43,6 +46,7 @@ public class FragmentDetailsSave extends Fragment {
 
     private void deleteImage() {
         roomPresenter.deleteData(photo);
+        adapter.delete(position);
         returnActivity();
     }
 
@@ -60,6 +64,4 @@ public class FragmentDetailsSave extends Fragment {
                 .remove(this)
                 .commit();
     }
-
-
 }

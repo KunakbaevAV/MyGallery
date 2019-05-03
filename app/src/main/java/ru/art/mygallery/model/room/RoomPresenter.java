@@ -25,6 +25,11 @@ public class RoomPresenter {
         this.roomUpdate = roomUpdate;
     }
 
+    public RoomPresenter() {
+        photoDao = App.getAppDataBase().imageDao();
+        savedImagesList = new ArrayList<>();
+    }
+
     public void getData() {
         Disposable disposable = photoDao.getAll()
                 .subscribeOn(Schedulers.io())
@@ -33,7 +38,7 @@ public class RoomPresenter {
                         savedImages -> {
                             savedImagesList.clear();
                             savedImagesList.addAll(savedImages);
-                            roomUpdate.update();
+                            if (roomUpdate != null) roomUpdate.update();
                         },
                         throwable -> Log.i(TAG, "getData: " + throwable)
                 );

@@ -44,8 +44,8 @@ public class SaveActivity extends AppCompatActivity implements IMoxyUpdater {
     }
 
     @Override
-    public void showDetails(Photo photo) {
-        FragmentDetailsSave fragment = new FragmentDetailsSave(photo);
+    public void showDetails(Photo photo, int position) {
+        FragmentDetailsSave fragment = new FragmentDetailsSave(photo, myAdapter, position);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container_save, fragment)

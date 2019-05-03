@@ -46,6 +46,11 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return iRecyclerAdapter.getItemCount();
     }
 
+    void delete(int position) {
+        iRecyclerAdapter.delete(position);
+        notifyDataSetChanged();
+    }
+
     class MyViewHolder extends ViewHolder implements IViewHolder {
 
         @BindView(R.id.card_image)
@@ -80,6 +85,5 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public void setOnClickListener(OnClickListener listener) {
             imageView.setOnClickListener(listener);
         }
-
     }
 }

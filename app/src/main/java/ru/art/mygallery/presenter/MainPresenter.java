@@ -55,8 +55,12 @@ public class MainPresenter extends MvpPresenter<IMoxyUpdater> {
             int position = holder.getPos();
             holder.setHit(photos.hits.get(position));
             Photo photo = new Photo(photos.hits.get(position).webformatURL);
-//            photo.positionInRecycler = position;
-            holder.setOnClickListener(v -> getViewState().showDetails(photo));
+            holder.setOnClickListener(v -> getViewState().showDetails(photo, position));
+        }
+
+        @Override
+        public void delete(int position) {
+
         }
 
         @Override

@@ -8,5 +8,7 @@ import ru.art.mygallery.view.IViewHolder;
 public interface IRecyclerAdapter {
     void bindView(IViewHolder iViewHolder);
 
+    void delete(int position);
+
     int getItemCount();
 }

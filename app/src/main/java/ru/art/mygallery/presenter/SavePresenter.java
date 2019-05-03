@@ -44,8 +44,12 @@ public class SavePresenter implements IRoomUpdater {
             hit.webformatURL = photos.get(position).url;
             iViewHolder.setHit(hit);
             Photo photo = photos.get(position);
-//            photo.positionInRecycler = position;
-            iViewHolder.setOnClickListener(v -> moxyUpdater.showDetails(photo));
+            iViewHolder.setOnClickListener(v -> moxyUpdater.showDetails(photo, position));
+        }
+
+        @Override
+        public void delete(int position) {
+            photos.remove(position);
         }
 
         @Override

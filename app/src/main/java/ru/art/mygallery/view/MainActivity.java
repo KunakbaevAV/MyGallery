@@ -64,7 +64,9 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.description) {
-            showMessage("Первое приложение с использованием популярных библиотек");
+            Toast.makeText(this,
+                    "Первое приложение с использованием популярных библиотек",
+                    Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.action) {
             startSaveActivity();
         }
@@ -82,7 +84,7 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
     }
 
     @Override
-    public void showDetails(Photo photo) {
+    public void showDetails(Photo photo, int position) {
         fragmentDetails = new FragmentDetails(photo);
         getSupportFragmentManager()
                 .beginTransaction()
@@ -101,9 +103,5 @@ public class MainActivity extends MvpKtxActivity implements IMoxyUpdater {
                     .remove(fragmentDetails)
                     .commit();
         }
-    }
-
-    private void showMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

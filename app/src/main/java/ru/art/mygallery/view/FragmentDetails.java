@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -46,6 +47,8 @@ public class FragmentDetails extends Fragment {
 
     private void saveImage() {
         roomPresenter.putData(photo);
+        Toast.makeText(this.getContext(), "Сохранено", Toast.LENGTH_SHORT).show();
+        returnActivity();
     }
 
     private void initImage(View view) {
@@ -62,6 +65,4 @@ public class FragmentDetails extends Fragment {
                 .remove(this)
                 .commit();
     }
-
-
 }
