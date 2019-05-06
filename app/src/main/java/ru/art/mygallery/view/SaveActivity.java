@@ -32,13 +32,11 @@ public class SaveActivity extends MvpKtxActivity implements IMoxyUpdater {
         return new SavePresenter();
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
         ButterKnife.bind(this);
-//        presenter = new SavePresenter();
         initRecyclerView();
     }
 
@@ -56,11 +54,22 @@ public class SaveActivity extends MvpKtxActivity implements IMoxyUpdater {
 
     @Override
     public void showDetails(Photo photo, int position) {
-        FragmentDetailsSave fragment = new FragmentDetailsSave(photo, myAdapter, position);
+        fragmentDetails = new FragmentDetailsSave(photo, myAdapter, position);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container_save, fragment)
+                .add(R.id.container_save, fragmentDetails)
                 .commit();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (fragmentDetails != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragmentDetails)
+                    .commit();
+        }
     }
 
     @OnClick(R.id.button_save_back)

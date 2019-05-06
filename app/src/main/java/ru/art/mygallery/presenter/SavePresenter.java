@@ -19,10 +19,8 @@ public class SavePresenter extends MvpPresenter<IMoxyUpdater> implements IRoomUp
     private List<Photo> photos;
     private RecyclerAdapter recyclerAdapter;
     private RoomPresenter roomPresenter;
-//    private IMoxyUpdater moxyUpdater;
 
     public SavePresenter() {
-//        this.moxyUpdater = moxyUpdater;
         recyclerAdapter = new RecyclerAdapter();
         roomPresenter = new RoomPresenter(this);
         photos = new ArrayList<>();
