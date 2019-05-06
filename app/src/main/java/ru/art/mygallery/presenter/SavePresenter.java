@@ -1,5 +1,8 @@
 package ru.art.mygallery.presenter;
 
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +13,16 @@ import ru.art.mygallery.model.room.RoomPresenter;
 import ru.art.mygallery.view.IMoxyUpdater;
 import ru.art.mygallery.view.IViewHolder;
 
-public class SavePresenter implements IRoomUpdater {
+@InjectViewState
+public class SavePresenter extends MvpPresenter<IMoxyUpdater> implements IRoomUpdater {
 
     private List<Photo> photos;
     private RecyclerAdapter recyclerAdapter;
     private RoomPresenter roomPresenter;
-    private IMoxyUpdater moxyUpdater;
+//    private IMoxyUpdater moxyUpdater;
 
-    public SavePresenter(IMoxyUpdater moxyUpdater) {
-        this.moxyUpdater = moxyUpdater;
+    public SavePresenter() {
+//        this.moxyUpdater = moxyUpdater;
         recyclerAdapter = new RecyclerAdapter();
         roomPresenter = new RoomPresenter(this);
         photos = new ArrayList<>();
@@ -32,7 +36,7 @@ public class SavePresenter implements IRoomUpdater {
     @Override
     public void update() {
         photos = roomPresenter.getSavedImagesList();
-        moxyUpdater.updateRecyclerView();
+        getViewState().updateRecyclerView();
     }
 
     private class RecyclerAdapter implements IRecyclerAdapter {
@@ -44,7 +48,7 @@ public class SavePresenter implements IRoomUpdater {
             hit.webformatURL = photos.get(position).url;
             iViewHolder.setHit(hit);
             Photo photo = photos.get(position);
-            iViewHolder.setOnClickListener(v -> moxyUpdater.showDetails(photo, position));
+            iViewHolder.setOnClickListener(v -> getViewState().showDetails(photo, position));
         }
 
         @Override

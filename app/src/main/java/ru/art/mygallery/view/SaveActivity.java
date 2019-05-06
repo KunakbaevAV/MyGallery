@@ -2,9 +2,11 @@ package ru.art.mygallery.view;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,22 +14,31 @@ import butterknife.OnClick;
 import ru.art.mygallery.R;
 import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.presenter.SavePresenter;
+import ru.art.mygallery.x_moxy.MvpKtxActivity;
 
-public class SaveActivity extends AppCompatActivity implements IMoxyUpdater {
+public class SaveActivity extends MvpKtxActivity implements IMoxyUpdater {
 
     @BindView(R.id.recycler_save)
     RecyclerView recyclerView;
 
-    SavePresenter presenter;
     private MyAdapter myAdapter;
     private FragmentDetailsSave fragmentDetails;
+
+    @InjectPresenter
+    SavePresenter presenter;
+
+    @ProvidePresenter
+    public SavePresenter providePresenter() {
+        return new SavePresenter();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save);
         ButterKnife.bind(this);
-        presenter = new SavePresenter(this);
+//        presenter = new SavePresenter();
         initRecyclerView();
     }
 
