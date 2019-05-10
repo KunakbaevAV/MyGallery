@@ -1,5 +1,5 @@
 package ru.art.mygallery.model.room;
 
-public interface IRoomUpdater {
+public interface IRoomListener {
     void update();
 }

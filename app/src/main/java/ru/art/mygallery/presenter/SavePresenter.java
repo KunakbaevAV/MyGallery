@@ -6,25 +6,36 @@ import com.arellomobile.mvp.MvpPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import ru.art.mygallery.App;
 import ru.art.mygallery.model.entity.Hit;
-import ru.art.mygallery.model.room.IRoomUpdater;
+import ru.art.mygallery.model.room.IRoomListener;
 import ru.art.mygallery.model.room.Photo;
 import ru.art.mygallery.model.room.RoomPresenter;
 import ru.art.mygallery.view.IMoxyUpdater;
 import ru.art.mygallery.view.IViewHolder;
 
 @InjectViewState
-public class SavePresenter extends MvpPresenter<IMoxyUpdater> implements IRoomUpdater {
+public class SavePresenter extends MvpPresenter<IMoxyUpdater> implements IRoomListener {
 
     private List<Photo> photos;
     private RecyclerAdapter recyclerAdapter;
-    private RoomPresenter roomPresenter;
+
+    @Inject
+    RoomPresenter roomPresenter;
+
 
     public SavePresenter() {
+        initRoomPresenter();
         recyclerAdapter = new RecyclerAdapter();
-        roomPresenter = new RoomPresenter(this);
         photos = new ArrayList<>();
         roomPresenter.getData();
+    }
+
+    private void initRoomPresenter() {
+        App.getAppComponent().inject(this);
+        roomPresenter.addListener(this);
     }
 
     public RecyclerAdapter getRecyclerAdapter() {

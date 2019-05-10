@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import javax.inject.Inject;
+
 import ru.art.mygallery.R;
 import ru.art.mygallery.model.GlideLoader;
 import ru.art.mygallery.model.room.Photo;
@@ -19,9 +21,11 @@ import ru.art.mygallery.model.room.RoomPresenter;
 public class FragmentDetailsSave extends Fragment {
 
     private Photo photo;
-    private RoomPresenter roomPresenter;
     private MyAdapter adapter;
     private int position;
+
+    @Inject
+    RoomPresenter roomPresenter;
 
     FragmentDetailsSave(Photo photo, MyAdapter adapter, int position) {
         this.photo = photo;
@@ -35,7 +39,7 @@ public class FragmentDetailsSave extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details_save, container, false);
         initImage(view);
         initButton(view);
-        roomPresenter = new RoomPresenter();
+//        roomPresenter = new RoomPresenter();
         return view;
     }
 

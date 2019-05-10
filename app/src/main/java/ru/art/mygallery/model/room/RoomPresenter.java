@@ -16,18 +16,34 @@ public class RoomPresenter {
 
     private final String TAG = "favourit";
     private List<Photo> savedImagesList;
-    private IRoomUpdater roomUpdate;
+    //    private IRoomListener roomUpdate;
     private PhotoDao photoDao;
+    private List<IRoomListener> listeners;
 
-    public RoomPresenter(IRoomUpdater roomUpdate) {
-        photoDao = App.getAppDataBase().imageDao();
-        savedImagesList = new ArrayList<>();
-        this.roomUpdate = roomUpdate;
-    }
+//    public RoomPresenter(IRoomListener roomUpdate) {
+//        photoDao = App.getAppDataBase().imageDao();
+//        savedImagesList = new ArrayList<>();
+//        this.roomUpdate = roomUpdate;
+//    }
 
     public RoomPresenter() {
         photoDao = App.getAppDataBase().imageDao();
         savedImagesList = new ArrayList<>();
+        listeners = new ArrayList<>();
+    }
+
+    public void addListener(IRoomListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(IRoomListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void updateListeners() {
+        for (IRoomListener listener : listeners) {
+            updateListeners();
+        }
     }
 
     public void getData() {
@@ -38,7 +54,7 @@ public class RoomPresenter {
                         savedImages -> {
                             savedImagesList.clear();
                             savedImagesList.addAll(savedImages);
-                            if (roomUpdate != null) roomUpdate.update();
+                            updateListeners();
                         },
                         throwable -> Log.i(TAG, "getData: " + throwable)
                 );
