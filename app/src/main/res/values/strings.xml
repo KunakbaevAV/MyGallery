@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyGallery</string>
+    <string name="description">Описание</string>
+    <string name="defaut">Сбросить счетчик</string>
+    <string name="press">Нажми</string>
+    <string name="action">Действие</string>
+    <string name="save">Сохранить</string>
+    <string name="back">Назад</string>
+    <string name="choosen">Избранное</string>
+    <string name="delete">Удалить</string>
+</resources>
